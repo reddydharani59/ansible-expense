@@ -1,4 +1,4 @@
-#!/bin/bash
+
 - name: using shell module
   hosts: localhost
   tasks:
