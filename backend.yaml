@@ -3,4 +3,4 @@
   hosts: localhost
   tasks:
   - name: shell module
-    ansible.builtin.shell: " echo, 'hi this is from shell module' > /tmp/shell.txt"
+    ansible.builtin.shell: " echo 'hi this is from shell module' > /tmp/shell.txt"
