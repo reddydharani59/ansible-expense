@@ -1,6 +1,7 @@
 
 - name: install backend
   hosts: backend
+  become: yes
   vars:
    local_host: db.daws-78s.site
    
