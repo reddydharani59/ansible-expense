@@ -1,8 +1,8 @@
  - name: configuring db server
    hosts: db
    become: yes
-   vars:
-    login_host: db.daws-78s.site
+   #vars:
+    #login_host: db.daws-78s.site
    vars_prompt:
    - name: mysql_root_password
      prompt: please enter user name
@@ -30,7 +30,7 @@
      community.mysql.mysql_info:
        login_user: root
        login_password: "{{ mysql_root_password }}""
-       login_host: "{{ login_host }}"
+       login_host: db.daws-78s.site
        filter: version
      ignore_errors: yes
      register: mysql_connection_output
