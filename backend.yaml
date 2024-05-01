@@ -1,6 +1,65 @@
 
-- name: using shell module
-  hosts: localhost
+- name: install backend
+  hosts: backend
+  vars:
+   local_host: db.daws-78s.site
+   
   tasks:
-  - name: command module
-    ansible.builtin.shell: " echo 'hi this is from shell module' > /tmp/shell.txt"
+  - name: disable defualt nodejs
+    ansible.buitlin.command: dnf module disable nodejs:18 -y
+  - name: enable nodejs
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+  - name: install nodejs
+    ansible.builtin.dnf:
+    name: nodejs
+    state: latesst
+  - name: create user
+    ansible.buitin.user:
+     name: expense
+  - name: create directory
+    ansible.builtin.file:
+     path: /app
+     state: directory
+  - name: download backend code
+    ansible.builtin.get_url:
+     url:  https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+     dest: /tmp/backend.zip
+
+  - name: unzip the code
+    ansible.builtin.unarchieve:
+     src: /tmp/backend.zip
+     dest: /app
+     remote_src: yes
+  - name: install npm dependencies
+    ansible.builtin.command: npm install
+    args:
+      chdir: /app
+  - name: copy the backend service file
+    ansible.builtin.copy:
+     src: backendservice.sh
+     dest: /etc/systemd/system/backendservice.sh
+
+
+  - name: installing mysql python dependencies
+    ansible.builtin.pip:
+      name:
+      - PyMySql
+      - cryptography
+      executable: pip3.9
+
+  - name: import the data
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: ExpenseApp@1 
+      login_hosts: "{{login_host}}"
+      target: /app/schema/backend.sql
+      state: import
+      name: all
+  - name: deamon relaod
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+  - name: start and enable the backend
+    ansible.builtin.service:
+      name: backend
+      state: started
+      enabled: yes
