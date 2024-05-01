@@ -12,33 +12,33 @@
     ansible.builtin.command: dnf module enable nodejs:20 -y
   - name: install nodejs
     ansible.builtin.dnf:
-    name: nodejs
-    state: latesst
+      name: nodejs
+      state: latesst
   - name: create user
     ansible.buitin.user:
-     name: expense
+      name: expense
   - name: create directory
     ansible.builtin.file:
-     path: /app
-     state: directory
+      path: /app
+      state: directory
   - name: download backend code
     ansible.builtin.get_url:
-     url:  https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-     dest: /tmp/backend.zip
+      url:  https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+      dest: /tmp/backend.zip
 
   - name: unzip the code
     ansible.builtin.unarchieve:
-     src: /tmp/backend.zip
-     dest: /app
-     remote_src: yes
+      src: /tmp/backend.zip
+      dest: /app
+      remote_src: yes
   - name: install npm dependencies
     ansible.builtin.command: npm install
     args:
       chdir: /app
   - name: copy the backend service file
     ansible.builtin.copy:
-     src: backendservice.sh
-     dest: /etc/systemd/system/backendservice.sh
+      src: backendservice.sh
+      dest: /etc/systemd/system/backendservice.sh
 
 
   - name: installing mysql python dependencies
