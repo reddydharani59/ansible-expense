@@ -18,7 +18,7 @@
     - nodejs
     - mysql
   - name: create user
-    ansible.buitin.user:
+    ansible.builtin.user:
       name: expense
   - name: create directory
     ansible.builtin.file:
