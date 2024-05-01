@@ -2,6 +2,5 @@
 - name: using shell module
   hosts: localhost
   tasks:
-  - name: command module
-    ansible.builtin.shell: 
-        msg: "hi this is from shell module > /tmp/shell.txt"
+  - name: shell module
+    ansible.builtin.shell: " echo, 'hi this is from shell module' > /tmp/shell.txt"
