@@ -6,14 +6,17 @@
    local_host: db.daws-78s.site
    
   tasks:
-  - name: disable defualt nodejs
+  - name: disable default nodejs
     ansible.buitlin.command: dnf module disable nodejs -y
   - name: enable nodejs
     ansible.builtin.command: dnf module enable nodejs:20 -y
   - name: install nodejs
     ansible.builtin.dnf:
-      name: nodejs
-      state: latesst
+      name: "{{item}}""
+      state: latest
+    loop:
+    - nodejs
+    - mysql
   - name: create user
     ansible.buitin.user:
       name: expense
