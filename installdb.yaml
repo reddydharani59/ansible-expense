@@ -1,5 +1,5 @@
-- name: installing db
-  hosts: 34.204.14.161
+- name: configuring db server
+  hosts: db
   become: yes
   vars:
    login_host: db.daws-78s.site

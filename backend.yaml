@@ -1,5 +1,5 @@
 
-- name: install backend
+- name: configuring backend server
   hosts: backend
   become: yes
   vars:
