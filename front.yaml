@@ -1,0 +1,16 @@
+- name: configuring the front server
+  hosts: web
+  vars:
+  tasks:
+   - name: installing nginx
+     ansible.builtin.dnf:
+       name: nginx
+       state: latest
+   - name: starting and enable nginx
+     ansible.builtin.service:
+       name: nginx
+       state: started
+       enabled: yes
+        
+
+ 
