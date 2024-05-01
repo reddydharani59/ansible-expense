@@ -28,16 +28,16 @@
 
   - name: setting the password
     community.mysql.mysql_info:
-     login_user: root
-     login_password: "{{ mysql_root_password }}""
-     login_hosts: "{{login_host}}"
-     filter: version
+      login_user: root
+      login_password: "{{ mysql_root_password }}""
+      login_hosts: "{{login_host}}"
+      filter: version
     ignore_errors: yes
-    register: mysql_output
+    register: mysql_connection_output
 
   - name: print the information
     ansible.builtin.debug:
-     msg: "output : {{ mysql_output }}"
+     msg: "output: {{mysql_connection_output}}"
 
   - name: setting the username and passsword
     ansible.builtin.command: "mysql_secure_installation --set--root-pass {{ mysql_root_password }}"
